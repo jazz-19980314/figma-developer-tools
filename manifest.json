@@ -1,9 +1,9 @@
 {
-  "name": "Inspector",
-  "id": "1223066860142873673",
+  "name": "Viewer",
+  "id": "1349201268358450216",
   "api": "1.0.0",
   "main": "dist/code.js",
-  "ui": "dist/index.html",
+  "ui": "dist/iframe.html",
   "permissions": [
     "currentuser",
     "activeusers",

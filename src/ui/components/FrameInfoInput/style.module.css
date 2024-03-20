@@ -1,0 +1,52 @@
+.container {
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  margin: 1px 0 1px 0;
+  font-size: 11px;
+}
+.containerXY {
+  display: flex;
+}
+svg.icon {
+  position: absolute;
+  opacity: 0.4;
+  left: 10px;
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  fill: #efefef;
+}
+.input_x {
+  flex: 1;
+  border: 1px solid #0000001a;
+  border-radius: 2px;
+  width: 40%;
+  height: 30px;
+  margin: 1px 0 1px 0;
+  font-size: 11px;
+  padding: 8px 4px 8px 32px;
+}
+.input::placeholder {
+  color: #00000080; 
+}
+
+.input:focus, .input:active {
+  border: 1px solid #18a0fb;
+  outline: 1px solid #18a0fb;
+  outline-offset: -2px;
+}
+
+.frameInfo {
+  display: flex;
+  /* justify-content: space-around; */
+}
+.myLabel {
+  width: 30px;
+  color: #000 !important;
+}
+
+.generateBtn {
+  margin: 20px 0;
+}

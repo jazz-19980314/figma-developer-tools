@@ -40,7 +40,14 @@ const PluginMessageProvider = ({ children }: { children: React.ReactElement[]}) 
       }
       if (event.data.pluginMessage.type === 'get-node-json-response') {
         const nodeJSON = event.data.pluginMessage.data;
-        setSelectedFigmaNodeJSON(nodeJSON)
+        const parentNodeJSON = event.data.pluginMessage.parentNode;
+        const parseNodeJSON = JSON.parse(nodeJSON);
+        const parseParentNodeJSON = JSON.parse(parentNodeJSON);
+        parseNodeJSON.topParentFrameAbsoluteBoundingBox = parseParentNodeJSON.absoluteBoundingBox;
+        parseNodeJSON.topParentFrameId = parseParentNodeJSON.id;
+        parseNodeJSON.topParentFrameName = parseParentNodeJSON.name;
+        console.log(parseNodeJSON);
+        setSelectedFigmaNodeJSON(JSON.stringify(parseNodeJSON))
       }
     };
 

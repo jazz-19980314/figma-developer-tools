@@ -119,11 +119,11 @@ div.detailLabel {
   height: fit-content;
   flex: 1
 }
-.propertyDetails {
+/* .propertyDetails {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
+} */
 .propertySearchInput {
   display: flex;
   align-items: center;

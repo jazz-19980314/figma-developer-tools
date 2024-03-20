@@ -30,6 +30,32 @@ import { Button, Label, Text } from "react-figma-plugin-ds"
 import { PluginMessageContext } from '../../context/PluginMessages'
 import style from './style.module.css'
 
+const templateJSON = {
+  // app-id,固定值，用户选择
+  "app-id": "cid-app",
+  // app的屏幕，page
+  "scenes": [
+    {
+      // page的名字
+      "name": "scene01",
+      // page加载的present url
+      "url": "https://www.figma.com/embed?embed_host=share&url=",
+      // page中的交互点位
+      "actions": [
+        {
+          "width": 100,
+          "height": 100,
+          "x": 200,
+          "y": 500,
+          "text": "fid-03",
+          // 需要控制的app的page: appid.pageName
+          "target": ["fid-app.scene03"],
+        }
+      ]
+    }
+  ]
+}
+
 interface Props {
   node: FigmaNode;
 }
@@ -53,10 +79,10 @@ const FigmaItem = (props: Props) => {
     return type === 'COMPONENT' || type === 'COMPONENT_SET' || type === 'INSTANCE'
   }
   const selectNode = (id: string) => {
-    window.parent.postMessage({ pluginMessage: { type: 'select-node', data: {id} } }, '*')
+    window.parent.postMessage({ pluginMessage: { type: 'select-node', data: { id } } }, '*')
   }
   const scrollToNode = (id: string) => {
-    window.parent.postMessage({ pluginMessage: { type: 'scroll-to-node', data: {id} } }, '*')
+    window.parent.postMessage({ pluginMessage: { type: 'scroll-to-node', data: { id } } }, '*')
   }
 
   const onDetailsTabClick = () => setShowJsonTab(false)
@@ -64,16 +90,20 @@ const FigmaItem = (props: Props) => {
     window.parent.postMessage({ pluginMessage: { type: 'get-node-json', data: { id: node.id, query: '' } } }, '*')
     setShowJsonTab(true)
   }
-  
-  const onPropertySeach =  (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const onPropertySeach = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
-    window.parent.postMessage({ pluginMessage: { type: 'get-node-json', data: { id: node.id, query} } }, '*')
+    window.parent.postMessage({ pluginMessage: { type: 'get-node-json', data: { id: node.id, query } } }, '*')
+  }
+
+  const updateJson = (val:any) => {
+      console.log('update', val)
   }
 
   const getFigmaNodeIcon = (type: string) => {
     switch (type) {
       case 'FRAME':
-        return <FigmaFrameIcon/>
+        return <FigmaFrameIcon />
       case 'SECTION':
         return <FigmaSectionIcon />;
       case 'TEXT':
@@ -121,7 +151,18 @@ const FigmaItem = (props: Props) => {
 
   const getNodeJSON = () => {
     try {
-      return JSON.parse(selectedFigmaNodeJSON)
+      const nodeJSON = JSON.parse(selectedFigmaNodeJSON);
+      const nodeInfo =  {
+        width: nodeJSON.absoluteBoundingBox.width,
+        height: nodeJSON.absoluteBoundingBox.height,
+        x: nodeJSON.absoluteBoundingBox.x - nodeJSON.topParentFrameAbsoluteBoundingBox.x,
+        y: nodeJSON.absoluteBoundingBox.y - nodeJSON.topParentFrameAbsoluteBoundingBox.y,
+        text: nodeJSON.name,
+        target: nodeJSON.reactions.map((item: { action: { destinationId: any; }; }) => item.action.destinationId)
+      }
+      templateJSON.scenes[0].name = nodeJSON.topParentFrameName;
+      templateJSON.scenes[0].actions[0] = nodeInfo;
+      return templateJSON;
     } catch (error) {
       console.error("Error parsing node json", error)
       return {
@@ -132,13 +173,13 @@ const FigmaItem = (props: Props) => {
 
   useEffect(function animateItemSelected() {
     // if (activeItemId === node.id) {
-      setShowFade(activeItemId === node.id)
-      // setTimeout(() => setShowFade(false), 300)
+    setShowFade(activeItemId === node.id)
+    // setTimeout(() => setShowFade(false), 300)
     // }
   }, [activeItemId, node.id])
 
   return (
-    <div 
+    <div
       className={classNames({
         [style.figmaItem]: true,
         [style.active]: activeItemId === node.id
@@ -155,7 +196,7 @@ const FigmaItem = (props: Props) => {
         </div>
       </div>
       {activeItemId === node.id && (
-        <div className={classNames({[style.details]: true, [style.show]: showFade})}>
+        <div className={classNames({ [style.details]: true, [style.show]: showFade })}>
           <div className={style.detailsTabs}>
             <div
               className={classNames({
@@ -167,16 +208,16 @@ const FigmaItem = (props: Props) => {
               Details
             </div>
             <div
-                className={classNames({
-                  [style.detailsTab]: true,
-                  [style.activeTab]: showJsonTab
-                })}
+              className={classNames({
+                [style.detailsTab]: true,
+                [style.activeTab]: showJsonTab
+              })}
               onClick={onJsonTabClick}
             >
               JSON
             </div>
           </div>
-          <hr className={style.divider}/>
+          <hr className={style.divider} />
           <div className={style.detailsPanel}>
             {!showJsonTab && (
               <>
@@ -185,7 +226,7 @@ const FigmaItem = (props: Props) => {
                   <Text size="small">{node.name}</Text>
                 </div>
                 <div className={style.detail}>
-                  <Label className={style.detailLabel}  size='small' weight='bold'>Id:</Label>
+                  <Label className={style.detailLabel} size='small' weight='bold'>Id:</Label>
                   <Text size="small">{node.id}</Text>
                 </div>
                 <div className={style.detail}>
@@ -202,7 +243,7 @@ const FigmaItem = (props: Props) => {
                   <Label className={style.detailLabel} size='small' weight='bold'>Page:</Label>
                   <Text size="small">{node?.page?.name}</Text>
                 </div>
-               
+
 
                 <div className={style.btnWrapper}>
                   {/* <Button onClick={() => scrollToNode(node.id)}>Scroll to Node</Button> */}
@@ -212,12 +253,12 @@ const FigmaItem = (props: Props) => {
             )}
             {showJsonTab && (
               <div className={style.propertyDetails}>
-                <SearchInput
+                {/* <SearchInput
                   searchInputRef={searchInputRef}
                   placeholder="Search Node Properties"
                   onChange={onPropertySeach}
-                />
-                <ReactJson src={getNodeJSON()} collapsed={1} />
+                /> */}
+                <ReactJson src={getNodeJSON()} collapsed={6} onAdd={updateJson} onEdit={updateJson} onDelete={updateJson} name='figmaConfig' />
               </div>
             )}
           </div>

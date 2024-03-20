@@ -1,0 +1,279 @@
+{
+    "id": "I381:2342;241:8055",
+    "name": "1",
+    "absoluteBoundingBox": {
+        "x": -7141,
+        "y": 850,
+        "width": 708,
+        "height": 236
+    },
+    "absoluteRenderBounds": {
+        "x": -7141,
+        "y": 850,
+        "width": 708,
+        "height": 236
+    },
+    "absoluteTransform": [
+        [
+            1,
+            0,
+            -7141
+        ],
+        [
+            0,
+            1,
+            850
+        ]
+    ],
+    "attachedConnectors": [],
+    "backgroundStyleId": "",
+    "backgrounds": [],
+    "blendMode": "PASS_THROUGH",
+    "bottomLeftRadius": 0,
+    "bottomRightRadius": 0,
+    "boundVariables": {},
+    "children": [
+        {
+            "id": "I381:2342;241:8056",
+            "name": "card",
+            "type": "RECTANGLE"
+        },
+        {
+            "id": "I381:2342;241:8057",
+            "name": "THE villiage is algow<node-id=I381:2342;241:8057>",
+            "type": "TEXT"
+        },
+        {
+            "id": "I381:2342;241:8058",
+            "name": "Walking through a crowd<node-id=I381:2342;241:8058>",
+            "type": "TEXT"
+        },
+        {
+            "id": "I381:2342;241:8059",
+            "name": "Rectangle 1652",
+            "type": "VECTOR"
+        },
+        {
+            "id": "I381:2342;241:8060",
+            "name": "Icon_60_Circulate",
+            "type": "FRAME"
+        },
+        {
+            "id": "I381:2342;241:8065",
+            "name": "Component 37",
+            "type": "INSTANCE"
+        },
+        {
+            "id": "I381:2342;241:8066",
+            "name": "Icon_60_Circulate",
+            "type": "FRAME"
+        },
+        {
+            "id": "I381:2342;241:8069",
+            "name": "Component 36",
+            "type": "INSTANCE"
+        },
+        {
+            "id": "I381:2342;241:8070",
+            "name": "Component 40",
+            "type": "INSTANCE"
+        },
+        {
+            "id": "I381:2342;241:8071",
+            "name": "Component 41",
+            "type": "INSTANCE"
+        },
+        {
+            "id": "I381:2342;241:8072",
+            "name": "Endless Horizon / Ryan ...<node-id=I381:2342;241:8072>",
+            "type": "TEXT"
+        },
+        {
+            "id": "I381:2342;241:8073",
+            "name": "Rectangle 1924",
+            "type": "RECTANGLE"
+        },
+        {
+            "id": "I381:2342;241:8074",
+            "name": "Rectangle 1925",
+            "type": "RECTANGLE"
+        },
+        {
+            "id": "I381:2342;241:8075",
+            "name": "Rectangle 2246",
+            "type": "RECTANGLE"
+        },
+        {
+            "id": "I381:2342;241:8076",
+            "name": "Frame 1814",
+            "type": "FRAME"
+        }
+    ],
+    "clipsContent": false,
+    "componentPropertyReferences": {},
+    "constrainProportions": false,
+    "constraints": {
+        "horizontal": "MIN",
+        "vertical": "MIN"
+    },
+    "cornerRadius": 0,
+    "cornerSmoothing": 0,
+    "counterAxisAlignContent": "AUTO",
+    "counterAxisAlignItems": "MIN",
+    "counterAxisSizingMode": "FIXED",
+    "counterAxisSpacing": 0,
+    "dashPattern": [],
+    "detachedInfo": null,
+    "devStatus": null,
+    "effectStyleId": "",
+    "effects": [],
+    "expanded": true,
+    "explicitVariableModes": {},
+    "exportSettings": [],
+    "fillGeometry": [
+        {
+            "windingRule": "NONZERO",
+            "data": "M0 0 L708 0 L708 236 L0 236 L0 0 Z"
+        }
+    ],
+    "fillStyleId": "",
+    "fills": [],
+    "gridStyleId": "",
+    "guides": [],
+    "height": 236,
+    "inferredAutoLayout": {
+        "layoutMode": "NONE",
+        "paddingLeft": 0,
+        "paddingRight": 0,
+        "paddingTop": 0,
+        "paddingBottom": 0,
+        "counterAxisSizingMode": "FIXED",
+        "primaryAxisSizingMode": "FIXED",
+        "primaryAxisAlignItems": "MIN",
+        "counterAxisAlignItems": "MIN",
+        "layoutAlign": "MIN",
+        "layoutGrow": 0,
+        "itemSpacing": 0,
+        "layoutPositioning": "AUTO"
+    },
+    "inferredVariables": {},
+    "isAsset": false,
+    "isMask": false,
+    "itemReverseZIndex": false,
+    "itemSpacing": 0,
+    "layoutAlign": "INHERIT",
+    "layoutGrids": [],
+    "layoutGrow": 0,
+    "layoutMode": "NONE",
+    "layoutPositioning": "AUTO",
+    "layoutSizingHorizontal": "FIXED",
+    "layoutSizingVertical": "FIXED",
+    "layoutWrap": "NO_WRAP",
+    "locked": false,
+    "maskType": "ALPHA",
+    "maxHeight": null,
+    "maxWidth": null,
+    "minHeight": null,
+    "minWidth": null,
+    "numberOfFixedChildren": 0,
+    "opacity": 1,
+    "overflowDirection": "NONE",
+    "overlayBackground": {
+        "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "NONE",
+    "overlayPositionType": "CENTER",
+    "paddingBottom": 0,
+    "paddingLeft": 0,
+    "paddingRight": 0,
+    "paddingTop": 0,
+    "parent": {
+        "id": "381:2342",
+        "type": "INSTANCE"
+    },
+    "playbackSettings": {
+        "autoplay": true,
+        "loop": true,
+        "muted": false
+    },
+    "primaryAxisAlignItems": "MIN",
+    "primaryAxisSizingMode": "AUTO",
+    "reactions": [
+        {
+            "action": {
+                "type": "NODE",
+                "destinationId": "2345:3070",
+                "navigation": "NAVIGATE",
+                "transition": {
+                    "type": "SMART_ANIMATE",
+                    "easing": {
+                        "type": "EASE_OUT"
+                    },
+                    "duration": 0.20000000298023224
+                },
+                "resetVideoPosition": false,
+                "resetScrollPosition": false,
+                "resetInteractiveComponents": false
+            },
+            "actions": [
+                {
+                    "type": "NODE",
+                    "destinationId": "2345:3070",
+                    "navigation": "NAVIGATE",
+                    "transition": {
+                        "type": "SMART_ANIMATE",
+                        "easing": {
+                            "type": "EASE_OUT"
+                        },
+                        "duration": 0.20000000298023224
+                    },
+                    "resetVideoPosition": false,
+                    "resetScrollPosition": false,
+                    "resetInteractiveComponents": false
+                }
+            ],
+            "trigger": {
+                "type": "ON_CLICK"
+            }
+        }
+    ],
+    "relativeTransform": [
+        [
+            1,
+            0,
+            24
+        ],
+        [
+            0,
+            1,
+            0
+        ]
+    ],
+    "resolvedVariableModes": {
+        "VariableCollectionId:1:4": "1:0"
+    },
+    "rotation": 0,
+    "strokeAlign": "INSIDE",
+    "strokeBottomWeight": 1,
+    "strokeCap": "NONE",
+    "strokeGeometry": [],
+    "strokeJoin": "MITER",
+    "strokeLeftWeight": 1,
+    "strokeMiterLimit": 4,
+    "strokeRightWeight": 1,
+    "strokeStyleId": "",
+    "strokeTopWeight": 1,
+    "strokeWeight": 1,
+    "strokes": [],
+    "strokesIncludedInLayout": false,
+    "stuckNodes": [],
+    "topLeftRadius": 0,
+    "topRightRadius": 0,
+    "type": "FRAME",
+    "variableConsumptionMap": {},
+    "verticalPadding": 0,
+    "visible": true,
+    "width": 708,
+    "x": 24,
+    "y": 0
+}

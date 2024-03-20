@@ -12,9 +12,9 @@ function getNodeInfo(node: BaseNode, pageInfo: FigmaPage, query?: string): Figma
   if (query !== undefined) {
     previewText = showMatchingText(query, text || '')
   }
-   
+
   if (type === 'RECTANGLE') {
-    const rectangleContainsImage = ( (node as RectangleNode).fills as ImagePaint[]).some((fill) => fill?.type === 'IMAGE')
+    const rectangleContainsImage = ((node as RectangleNode).fills as ImagePaint[]).some((fill) => fill?.type === 'IMAGE')
     if (rectangleContainsImage) type = 'IMAGE'
   }
   return {
@@ -55,7 +55,7 @@ function showMatchingText(searchQuery: string, text: string) {
   return contextText;
 }
 
-async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: boolean; textValueFilterEnabled: boolean}) {
+async function searchFigmaNodes(input: { query: string; layerNameFilterEnabled: boolean; textValueFilterEnabled: boolean }) {
   const { query, layerNameFilterEnabled, textValueFilterEnabled } = input;
   if (!query) {
     figma.ui.postMessage({
@@ -68,7 +68,7 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
   const shouldUseFigmaIdSearch = query.startsWith('id=')
 
   if (shouldUseFigmaIdSearch) {
-   
+
     const apiIdQuery = query.replace('id=', '')
     const searchResult: FigmaPageNodes[] = []
 
@@ -76,8 +76,8 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
     if (node) {
       const parentPage = findNodePage(node)
       if (parentPage) {
-        const pageInfo = { id: parentPage.id, name: parentPage.name}
-       
+        const pageInfo = { id: parentPage.id, name: parentPage.name }
+
         const nodeInfo = getNodeInfo(node, pageInfo)
         searchResult.push({
           page: pageInfo,
@@ -85,7 +85,7 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
         })
       }
     }
-  
+
     figma.ui.postMessage({
       type: "figma-search-response",
       data: searchResult
@@ -94,7 +94,7 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
   }
 
   figma.skipInvisibleInstanceChildren = true
- 
+
   // const matchingNodes = []
   const matchingNodes: FigmaPageNodes[] = figma.root.children.reduce((acc: FigmaPageNodes[], pageNode) => {
     const pageInfo = { id: pageNode.id, name: pageNode.name }
@@ -115,7 +115,7 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
     }
     if (textValueFilterEnabled) {
       nodes.push(
-        ...pageNode.findAllWithCriteria({ types: ["TEXT"]})
+        ...pageNode.findAllWithCriteria({ types: ["TEXT"] })
           .filter(node => {
             const { name, type, id } = node
             if (foundNodeMap.has(id)) return false
@@ -128,14 +128,14 @@ async function searchFigmaNodes(input: {query: string; layerNameFilterEnabled: b
           .map(node => getNodeInfo(node, pageInfo, query))
           .filter(Boolean)
       );
-    } 
+    }
     acc.push({
       page: pageInfo,
       nodes
     })
     return acc
   }, [])
- 
+
   figma.ui.postMessage({
     type: "figma-search-response",
     data: matchingNodes
@@ -212,15 +212,15 @@ function transformFigmaNodeToReadableJSON(node: any, query: string): any {
   };
   Object.keys(origin).sort().forEach((propertyName: string) => {
     if (result.hasOwnProperty(propertyName)) return
-    result[propertyName] = origin[propertyName];``
+    result[propertyName] = origin[propertyName]; ``
   })
 
   return result;
 }
 
-function sendCurrentSelection () {
+function sendCurrentSelection() {
   const selectedNodes = figma.currentPage.selection.map(({ id }) => {
-    const node =  figma.getNodeById(id);
+    const node = figma.getNodeById(id);
     if (!node) return
 
     const pageInfo = {
@@ -236,22 +236,33 @@ function sendCurrentSelection () {
     data: selectedNodes
   });
 }
-function sendCurrentPage () {
+function sendCurrentPage() {
   const { id, name } = figma.currentPage
   figma.ui.postMessage({
     type: 'current-page-change-response',
     data: { id, name }
   })
 }
-figma.showUI(__html__, { width: 400, height: 550 }, );
+figma.showUI(__html__, { width: 400, height: 550 },);
 
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
 
-figma.on("selectionchange", () =>  sendCurrentSelection());
+figma.on("selectionchange", () => sendCurrentSelection());
 
-figma.on("currentpagechange", () =>  sendCurrentPage());
+figma.on("currentpagechange", () => sendCurrentPage());
+
+function findNodeTopFrame(node: any): FrameNode | null {
+  if (!node) return null;
+  // @ts-ignore
+  if (node?.type === 'PAGE' || !node?.parent.type) return node
+  else if (node?.parent?.type === 'PAGE') {
+    return node;
+  } else {
+    return findNodeTopFrame(node?.parent)
+  }
+}
 
 function findNodePage(node: any): PageNode | null {
   if (!node) return null;
@@ -264,13 +275,16 @@ function findNodePage(node: any): PageNode | null {
   }
 }
 
-function sendNodeJson (nodeId: string, query: string) {
+function sendNodeJson(nodeId: string, query: string) {
   const node = figma.getNodeById(nodeId);
+  console.log("node", node)
   if (!node) return
   const json = JSON.stringify(transformFigmaNodeToReadableJSON(node, query))
+  const topFrameNode = findNodeTopFrame(node);
   figma.ui.postMessage({
     type: 'get-node-json-response',
-    data: json
+    data: json,
+    parentNode:  JSON.stringify(transformFigmaNodeToReadableJSON(topFrameNode, query))
   })
 }
 
@@ -297,7 +311,7 @@ figma.ui.onmessage = (msg: PluginMessage) => {
   if (msg.type === 'scroll-to-node') {
     const node = figma.getNodeById(msg.data.id);
     if (node) {
-      
+
       // figma.currentPage.selection = [node];
       const parentPage = findNodePage(node)
       if (parentPage) {
